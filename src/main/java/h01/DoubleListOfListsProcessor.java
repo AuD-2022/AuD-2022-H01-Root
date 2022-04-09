@@ -14,7 +14,7 @@ public class DoubleListOfListsProcessor {
      * @param listOfLists a reference to the head of a list with arbitrary size
      * @param limit       the maximum value that may not be exceeded by the sum of any sub-list in the returned list
      * @return a partitioned list of lists
-     * @throws ListOfListsOfDoubleException if a single value exceeds {@code limit}
+     * @throws RuntimeException if a single value exceeds {@code limit}
      */
     @Nullable
     public static ListItem<ListItem<Double>> divideListsAsCopyIteratively(
@@ -32,7 +32,7 @@ public class DoubleListOfListsProcessor {
      * @param listOfLists a reference to the head of a list with arbitrary size
      * @param limit       the maximum value that may not be exceeded by the sum of any sub-list in the returned list
      * @return a partitioned list of lists
-     * @throws ListOfListsOfDoubleException if a single value exceeds {@code limit}
+     * @throws RuntimeException if a single value exceeds {@code limit}
      */
     @Nullable
     public static ListItem<ListItem<Double>> divideListsAsCopyRecursively(
@@ -50,7 +50,7 @@ public class DoubleListOfListsProcessor {
      * @param listOfLists a reference to the head of a list with arbitrary size
      * @param limit       the maximum value that may not be exceeded by the sum of any sub-list in the returned list
      * @return a partitioned list of lists
-     * @throws ListOfListsOfDoubleException if a single value exceeds {@code limit}
+     * @throws RuntimeException if a single value exceeds {@code limit}
      */
     @Nullable
     public static ListItem<ListItem<Double>> divideListsInPlaceIteratively(
@@ -68,7 +68,7 @@ public class DoubleListOfListsProcessor {
      * @param listOfLists a reference to the head of a list with arbitrary size
      * @param limit       the maximum value that may not be exceeded by the sum of any sub-list in the returned list
      * @return a partitioned list of lists
-     * @throws ListOfListsOfDoubleException if a single value exceeds {@code limit}
+     * @throws RuntimeException if a single value exceeds {@code limit}
      */
     @Nullable
     public static ListItem<ListItem<Double>> divideListsInPlaceRecursively(
