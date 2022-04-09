@@ -9,7 +9,7 @@ public class DoubleListOfListsProcessor {
 
     /**
      * Partitions a copy of {@code listOfLists} so that the sum of each sub-list does not exceed {@code limit}.
-     * This implementation must use a single while-loop and not modify the input list.
+     * This implementation must not modify the input list.
      *
      * @param listOfLists a reference to the head of a list with arbitrary size
      * @param limit       the maximum value that may not be exceeded by the sum of any sub-list in the returned list
@@ -43,7 +43,7 @@ public class DoubleListOfListsProcessor {
 
     /**
      * Partitions a copy of {@code listOfLists} so that the sum of each sub-list does not exceed {@code limit}.
-     * This implementation must use a single while-loop and not create new sub-lists.
+     * This implementation must not create new sub-lists.
      *
      * @param listOfLists a reference to the head of a list with arbitrary size
      * @param limit       the maximum value that may not be exceeded by the sum of any sub-list in the returned list
@@ -78,7 +78,7 @@ public class DoubleListOfListsProcessor {
     /**
      * Writes out {@code listOfLists} (well, the sub-lists) to {@code writer}.
      *
-     * @param writer      an instance of a {@link Writer}
+     * @param writer      the writer to write to
      * @param listOfLists the list of lists to write out
      */
     public static void write(Writer writer, @Nullable ListItem<@Nullable ListItem<Double>> listOfLists) {
