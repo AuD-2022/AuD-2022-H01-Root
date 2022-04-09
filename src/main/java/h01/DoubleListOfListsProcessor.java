@@ -1,9 +1,9 @@
 package h01;
 
-import org.jetbrains.annotations.Nullable;
-
-import java.io.Reader;
+import java.io.BufferedReader;
 import java.io.Writer;
+
+import org.jetbrains.annotations.Nullable;
 
 public class DoubleListOfListsProcessor {
 
@@ -17,12 +17,11 @@ public class DoubleListOfListsProcessor {
      * @throws RuntimeException if a single value exceeds {@code limit}
      */
     @Nullable
-    public static ListItem<ListItem<Double>> divideListsAsCopyIteratively(
-        @Nullable ListItem<ListItem<Double>> listOfLists,
+    public static ListItem<@Nullable ListItem<Double>> divideListsAsCopyIteratively(
+        @Nullable ListItem<@Nullable ListItem<Double>> listOfLists,
         double limit
     ) {
-        // TODO: remove exception and implement method
-        throw new UnsupportedOperationException();
+        throw new RuntimeException("H2.1 - not implemented"); // TODO: H2.1 - remove if implemented
     }
 
     /**
@@ -35,12 +34,11 @@ public class DoubleListOfListsProcessor {
      * @throws RuntimeException if a single value exceeds {@code limit}
      */
     @Nullable
-    public static ListItem<ListItem<Double>> divideListsAsCopyRecursively(
-        @Nullable ListItem<ListItem<Double>> listOfLists,
+    public static ListItem<@Nullable ListItem<Double>> divideListsAsCopyRecursively(
+        @Nullable ListItem<@Nullable ListItem<Double>> listOfLists,
         double limit
     ) {
-        // TODO: remove exception and implement method
-        throw new UnsupportedOperationException();
+        throw new RuntimeException("H2.2 - not implemented"); // TODO: H2.2 - remove if implemented
     }
 
     /**
@@ -53,12 +51,11 @@ public class DoubleListOfListsProcessor {
      * @throws RuntimeException if a single value exceeds {@code limit}
      */
     @Nullable
-    public static ListItem<ListItem<Double>> divideListsInPlaceIteratively(
-        @Nullable ListItem<ListItem<Double>> listOfLists,
+    public static ListItem<@Nullable ListItem<Double>> divideListsInPlaceIteratively(
+        @Nullable ListItem<@Nullable ListItem<Double>> listOfLists,
         double limit
     ) {
-        // TODO: remove exception and implement method
-        throw new UnsupportedOperationException();
+        throw new RuntimeException("H2.3 - not implemented"); // TODO: H2.3 - remove if implemented
     }
 
     /**
@@ -71,12 +68,11 @@ public class DoubleListOfListsProcessor {
      * @throws RuntimeException if a single value exceeds {@code limit}
      */
     @Nullable
-    public static ListItem<ListItem<Double>> divideListsInPlaceRecursively(
-        @Nullable ListItem<ListItem<Double>> listOfLists,
+    public static ListItem<@Nullable ListItem<Double>> divideListsInPlaceRecursively(
+        @Nullable ListItem<@Nullable ListItem<Double>> listOfLists,
         double limit
     ) {
-        // TODO: remove exception and implement method
-        throw new UnsupportedOperationException();
+        throw new RuntimeException("H2.4 - not implemented"); // TODO: H2.4 - remove if implemented
     }
 
     /**
@@ -85,8 +81,8 @@ public class DoubleListOfListsProcessor {
      * @param writer      an instance of a {@link Writer}
      * @param listOfLists the list of lists to write out
      */
-    public static void write(Writer writer, ListItem<ListItem<Double>> listOfLists) {
-        throw new UnsupportedOperationException();
+    public static void write(Writer writer, @Nullable ListItem<@Nullable ListItem<Double>> listOfLists) {
+        throw new RuntimeException("H3.1 - not implemented"); // TODO: H3.1 - remove if implemented
     }
 
     /**
@@ -95,7 +91,7 @@ public class DoubleListOfListsProcessor {
      * @param reader the reader to read from
      * @return a list of lists of double
      */
-    public static ListItem<ListItem<Double>> read(BufferedReader reader) {
+    public static @Nullable ListItem<@Nullable ListItem<Double>> read(BufferedReader reader) {
         throw new RuntimeException("H3.2 - not implemented"); // TODO: H3.2 - remove if implemented
     }
 }
