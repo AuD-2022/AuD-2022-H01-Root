@@ -95,7 +95,7 @@ public class DoubleListOfListsProcessor {
      * @param reader the reader to read from
      * @return a list of lists of double
      */
-    public static ListItem<ListItem<Double>> read(Reader reader) {
-        throw new UnsupportedOperationException();
+    public static ListItem<ListItem<Double>> read(BufferedReader reader) {
+        throw new RuntimeException("H3.2 - not implemented"); // TODO: H3.2 - remove if implemented
     }
 }
