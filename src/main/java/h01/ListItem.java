@@ -1,5 +1,7 @@
 package h01;
 
+import org.jetbrains.annotations.Nullable;
+
 /**
  * This class represents a member of a linked list, which stores a value in {@link #key} and a reference to the next member
  * (or {@code null} if this is the last member in this list) in {@link #next}.
@@ -11,12 +13,12 @@ public class ListItem<T> {
     /**
      * The value stored in this member of a list.
      */
-    public T key;
+    public @Nullable T key;
 
     /**
      * A reference to the next member in this list (or {@code null} if this member is the last element in this list).
      */
-    public ListItem<T> next;
+    public @Nullable ListItem<T> next;
 
     /**
      * Empty constructor for creating a new {@link ListItem} object.
