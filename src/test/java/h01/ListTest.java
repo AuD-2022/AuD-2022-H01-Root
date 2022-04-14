@@ -11,6 +11,22 @@ public class ListTest {
         assertListOfListsEquals0(expected,  actual, 0);
     }
 
+    /**
+     * Checks deep equality for expected and actual list.
+     * @param expected the expected list
+     * @param actual the actual list
+     * @return if expected and actual list are equal
+     */
+    private static boolean listsEquals(ListItem<?> expected, ListItem<?> actual) {
+        if (expected != null && actual != null) {
+            if (expected.key instanceof ListItem<?> expectedKey && actual.key instanceof ListItem<?> actualKey) {
+                return listsEquals(expectedKey, actualKey) && listsEquals(expected.next, actual.next);
+            }
+            return Objects.equals(expected.key, actual.key) && listsEquals(expected.next, actual.next);
+        }
+        return expected == null && actual == null;
+    }
+
     private static <T> void assertListOfListsEquals0(ListItem<ListItem<T>> expected, ListItem<ListItem<T>> actual, int i) {
         if (expected == null && actual == null) {
             return;
