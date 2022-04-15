@@ -54,7 +54,7 @@ class DoubleListOfListsProcessorTest {
         var writer = new StringWriter();
         DoubleListOfListsProcessor.write(writer, listForReadWrite);
         var actual = writer.toString();
-        assertEquals(contentForReadWrite, actual);
+        assertEquals(contentForReadWrite.replace("\n", "\\n"), actual.replace("\n", "\\n"));
     }
 
     @Test
