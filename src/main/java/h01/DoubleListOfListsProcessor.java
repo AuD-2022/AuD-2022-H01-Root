@@ -47,57 +47,62 @@ public class DoubleListOfListsProcessor {
         double limit,
         Behaviour behaviour
     ) {
-        var outerHead = (ListItem<ListItem<Double>>) null;
-        var outerTail = (ListItem<ListItem<Double>>) null;
-        var innerTail = (ListItem<Double>) null;
+        var newOuterHead = (ListItem<ListItem<Double>>) null;
+        var newOuterTail = (ListItem<ListItem<Double>>) null;
+        var newInnerTail = (ListItem<Double>) null;
+        var i = 0;
+        var j = 0;
         var currOuter = listOfLists;
         // traverse outer items
         while (currOuter != null) {
+            var sumOfList = 0d;
             var currInner = currOuter.key;
-            var currSum = 0d;
-            if (outerTail == null) {
-                outerHead = outerTail = behaviour == AS_COPY ? new ListItem<>() : currOuter;
+            if (newOuterTail == null) {
+                newOuterHead = newOuterTail = behaviour == AS_COPY ? new ListItem<>() : currOuter;
             } else {
-                outerTail = outerTail.next = behaviour == AS_COPY ? new ListItem<>() : currOuter;
+                newOuterTail = newOuterTail.next = behaviour == AS_COPY ? new ListItem<>() : currOuter;
             }
             // traverse inner items
             while (currInner != null) {
-                currSum += currInner.key;
-                if (innerTail == null) {
-                    outerTail.key = innerTail = behaviour == AS_COPY ? new ListItem<>() : currInner;
+                sumOfList += currInner.key;
+                if (newInnerTail == null) {
+                    newOuterTail.key = newInnerTail = behaviour == AS_COPY ? new ListItem<>() : currInner;
                 } else {
-                    innerTail = innerTail.next = behaviour == AS_COPY ? new ListItem<>() : currInner;
+                    newInnerTail = newInnerTail.next = behaviour == AS_COPY ? new ListItem<>() : currInner;
                 }
                 // set inner tail (no effect if in-place)
-                innerTail.key = currInner.key;
-                // check next element
-                if (currInner.next != null && currSum + currInner.next.key > limit) {
-                    var nextOuter = currOuter.next;
+                newInnerTail.key = currInner.key;
+                // check if next element exceeds limit
+                if (currInner.next != null && sumOfList + currInner.next.key > limit)  {
+                    if (currInner.next.key > limit) {
+                        var delta = currInner.next.key - limit;
+                        throw new RuntimeException(String.format("element at (%d, %d) exceeds limit by %f", i, j, delta));
+                    }
+                    newInnerTail = null;
+                    var exNextOuter = currOuter.next;
+                    var exNextInner = currInner.next;
                     // create intermediate item
-                    outerTail.next = new ListItem<>();
-                    outerTail = outerTail.next;
-                    outerTail.key = innerTail = behaviour == AS_COPY ? new ListItem<>() : currInner.next;
-                    outerTail.key.key = currInner.next.key;
-                    if (innerTail.key > limit) {
-                        throw new RuntimeException();
-                    }
+                    newOuterTail = newOuterTail.next = new ListItem<>();
                     if (behaviour == IN_PLACE) {
-                        outerTail.next = nextOuter;
+                        newOuterTail.next = exNextOuter;
                         currInner.next = null;
-                        currOuter = outerTail;
-                        currInner = outerTail.key.next;
-                    } else if (behaviour == AS_COPY) {
-                        currInner = currInner.next.next;
+                        currOuter = newOuterTail;
                     }
+                    // set first = current inner item and reset sum
+                    currInner = exNextInner;
+                    sumOfList = 0;
                 } else {
-                    // set next inner item
+                    // set current inner item
                     currInner = currInner.next;
                 }
+                j++;
             }
             currOuter = currOuter.next;
-            innerTail = null;
+            newInnerTail = null;
+            i++;
+            j = 0;
         }
-        return outerHead;
+        return newOuterHead;
     }
 
     /**
