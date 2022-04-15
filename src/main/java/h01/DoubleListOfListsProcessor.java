@@ -148,44 +148,62 @@ public class DoubleListOfListsProcessor {
         return partitionListsRecursively(currOuter, currOuter.key, limit, null, null, 0, behaviour);
     }
 
+    @SuppressWarnings("DuplicatedCode")
     private static ListItem<ListItem<Double>> partitionListsRecursively(
         ListItem<ListItem<Double>> currOuter,
         ListItem<Double> currInner,
         double limit,
-        ListItem<ListItem<Double>> outerHead,
-        ListItem<Double> innerHead,
-        double sum,
+        ListItem<ListItem<Double>> newOuterTail,
+        ListItem<Double> newInnerTail,
+        int i,
+        int j,
+        double sumOfList,
         Behaviour behaviour
     ) {
         if (currOuter == null) {
             return null;
         }
-        if (outerHead == null) {
-            outerHead = behaviour == AS_COPY || currOuter.key != currInner ? new ListItem<>() : currOuter;
+        if (newOuterTail == null) {
+            newOuterTail = behaviour == AS_COPY ? new ListItem<>() : currOuter;
         }
         if (currInner != null) {
-            sum += currInner.key;
-
-            if (innerHead == null) {
-                outerHead.key = innerHead = behaviour == AS_COPY ? new ListItem<>() : currInner;
+            sumOfList += currInner.key;
+            if (newInnerTail == null) {
+                newOuterTail.key = newInnerTail = behaviour == AS_COPY ? new ListItem<>() : currInner;
             } else {
-                innerHead = innerHead.next = behaviour == AS_COPY ? new ListItem<>() : currInner;
+                newInnerTail = newInnerTail.next = behaviour == AS_COPY ? new ListItem<>() : currInner;
             }
-            innerHead.key = currInner.key;
-            if (currInner.next != null && sum + currInner.next.key > limit) {
-                if (behaviour == IN_PLACE) {
-                    currOuter.next = partitionListsRecursively(currOuter, currInner.next, limit, null, null, 0, behaviour);
-                    currInner.next = null;
-                } else {
-                    outerHead.next = partitionListsRecursively(currOuter, currInner.next, limit, null, null, 0, behaviour);
+            // set inner tail (no effect if in-place)
+            newInnerTail.key = currInner.key;
+            // check if next element exceeds limit
+            if (currInner.next != null && sumOfList + currInner.next.key > limit) {
+                // next element exceeds limit
+                if (currInner.next.key > limit) {
+                    var delta = currInner.next.key - limit;
+                    throw new RuntimeException(String.format("element at (%d, %d) exceeds limit by %f", i, j, delta));
                 }
+                newInnerTail = null;
+                var exNextOuter = currOuter.next;
+                var exNextInner = currInner.next;
+                // create intermediate item
+                newOuterTail = newOuterTail.next = new ListItem<>();
+                if (behaviour == IN_PLACE) {
+                    newOuterTail.next = exNextOuter;
+                    currInner.next = null;
+                    currOuter = newOuterTail;
+                }
+                // set first = current inner item and reset sum
+                currInner = exNextInner;
+                sumOfList = 0;
             } else {
-                partitionListsRecursively(currOuter, currInner.next, limit, outerHead, innerHead, sum, behaviour);
+                // set current inner item
+                currInner = currInner.next;
             }
+            partitionListsRecursively(currOuter, currInner, limit, newOuterTail, newInnerTail, i, j + 1, sumOfList, behaviour);
         } else if (currOuter.next != null) {
-            outerHead.next = partitionListsRecursively(currOuter.next, currOuter.next.key, limit, null, null, 0, behaviour);
+            newOuterTail.next = partitionListsRecursively(currOuter.next, currOuter.next.key, limit, null, null, i + 1, 0, 0, behaviour);
         }
-        return outerHead;
+        return newOuterTail;
     }
 
     /**
