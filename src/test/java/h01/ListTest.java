@@ -27,47 +27,8 @@ public class ListTest {
         return expected == null && actual == null;
     }
 
-    private static <T> void assertListOfListsEquals0(ListItem<ListItem<T>> expected, ListItem<ListItem<T>> actual, int i) {
-        if (expected == null && actual == null) {
-            return;
-        }
-
-        assertNotNull(
-            expected,
-            "Actual outer list is longer than the expected one"
-        );
-
-        assertNotNull(
-            actual,
-    "Actual outer list is shorter than the expected one"
-        );
-
-        assertListEquals(expected.key, actual.key, i, 0);
-        assertListOfListsEquals0(expected.next, actual.next, i+1);
-    }
-
-    private static <T> void assertListEquals(ListItem<T> expected, ListItem<T> actual, int i, int j) {
-        if (expected == null && actual == null) {
-            return;
-        }
-
-        assertNotNull(
-            expected,
-            String.format("Actual inner list at index %d is longer than the expected one", i)
-        );
-
-        assertNotNull(
-            actual,
-            String.format("Actual inner list at index %d is shorter than the expected one", i)
-        );
-
-        assertEquals(
-            expected.key,
-            actual.key,
-            String.format("Elements at indices (%d, %d) are not equal", i, j)
-        );
-
-        assertListEquals(expected.next, actual.next, i, j+1);
+    public static void assertListsEquals(ListItem<?> expected, ListItem<?> actual) {
+        assertEquals(toString(expected), toString(actual));
     }
 
     @SafeVarargs
