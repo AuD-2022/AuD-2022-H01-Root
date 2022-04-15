@@ -87,4 +87,17 @@ public class ListTest {
 
         return head;
     }
+
+    public static String toString(ListItem<?> list) {
+        var builder = new StringBuilder("(");
+        while (list != null) {
+            builder.append(list.key instanceof ListItem<?> item ? toString(item) : list.key);
+            if (list.next != null) {
+                builder.append(" ");
+            }
+            list = list.next;
+        }
+        return builder.append(")").toString();
+    }
+
 }
