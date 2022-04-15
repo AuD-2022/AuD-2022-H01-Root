@@ -4,8 +4,8 @@ import java.io.BufferedReader;
 import java.io.StringReader;
 import java.io.StringWriter;
 
-import static h01.PublicTests.ListTest.assertListsEquals;
-import static h01.PublicTests.ListTest.toList;
+import static h01.ListUtils.assertListsEquals;
+import static h01.ListUtils.toList;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -71,40 +71,41 @@ class PublicTests {
         assertListsEquals(listForReadWrite, actual);
     }
 
-    public static class ListTest {
+}
 
-        private ListTest() {}
+class ListUtils {
 
-        public static void assertListsEquals(ListItem<?> expected, ListItem<?> actual) {
-            assertEquals(toString(expected), toString(actual));
-        }
+    private ListUtils() {
+    }
 
-        @SafeVarargs
-        public static <T> ListItem<T> toList(T... elements) {
-            ListItem<T> head = null;
-            ListItem<T> tail = null;
-            for (var e : elements) {
-                if (head == null) {
-                    head = tail = new ListItem<>();
-                } else {
-                    tail = tail.next = new ListItem<>();
-                }
-                tail.key = e;
+    public static void assertListsEquals(ListItem<?> expected, ListItem<?> actual) {
+        assertEquals(toString(expected), toString(actual));
+    }
+
+    @SafeVarargs
+    public static <T> ListItem<T> toList(T... elements) {
+        ListItem<T> head = null;
+        ListItem<T> tail = null;
+        for (var e : elements) {
+            if (head == null) {
+                head = tail = new ListItem<>();
+            } else {
+                tail = tail.next = new ListItem<>();
             }
-            return head;
+            tail.key = e;
         }
+        return head;
+    }
 
-        public static String toString(ListItem<?> list) {
-            var builder = new StringBuilder("(");
-            while (list != null) {
-                builder.append(list.key instanceof ListItem<?> item ? toString(item) : list.key);
-                if (list.next != null) {
-                    builder.append(" ");
-                }
-                list = list.next;
+    public static String toString(ListItem<?> list) {
+        var builder = new StringBuilder("(");
+        while (list != null) {
+            builder.append(list.key instanceof ListItem<?> item ? toString(item) : list.key);
+            if (list.next != null) {
+                builder.append(" ");
             }
-            return builder.append(")").toString();
+            list = list.next;
         }
-
+        return builder.append(")").toString();
     }
 }
