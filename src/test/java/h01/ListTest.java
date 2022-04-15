@@ -1,7 +1,5 @@
 package h01;
 
-import java.util.Objects;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ListTest {
@@ -16,17 +14,14 @@ public class ListTest {
     public static <T> ListItem<T> toList(T... elements) {
         ListItem<T> head = null;
         ListItem<T> tail = null;
-
         for (var e : elements) {
             if (head == null) {
                 head = tail = new ListItem<>();
             } else {
                 tail = tail.next = new ListItem<>();
             }
-
             tail.key = e;
         }
-
         return head;
     }
 
