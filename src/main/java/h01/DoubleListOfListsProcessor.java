@@ -118,7 +118,10 @@ public class DoubleListOfListsProcessor {
         @Nullable ListItem<@Nullable ListItem<Double>> listOfLists,
         double limit
     ) {
-        return partitionListsRecursively(listOfLists, limit, AS_COPY);
+        if (listOfLists == null) {
+            return null;
+        }
+        return partitionListsRecursively(listOfLists, listOfLists.key, limit, null, null, 0, 0, 0.0, AS_COPY);
     }
 
     /**
@@ -134,18 +137,10 @@ public class DoubleListOfListsProcessor {
         @Nullable ListItem<@Nullable ListItem<Double>> listOfLists,
         double limit
     ) {
-        return partitionListsRecursively(listOfLists, limit, IN_PLACE);
-    }
-
-    public static ListItem<ListItem<Double>> partitionListsRecursively(
-        ListItem<ListItem<Double>> currOuter,
-        double limit,
-        Behaviour behaviour
-    ) {
-        if (currOuter == null) {
+        if (listOfLists == null) {
             return null;
         }
-        return partitionListsRecursively(currOuter, currOuter.key, limit, null, null, 0, behaviour);
+        return partitionListsRecursively(listOfLists, listOfLists.key, limit, null, null, 0, 0, 0.0, IN_PLACE);
     }
 
     @SuppressWarnings("DuplicatedCode")
