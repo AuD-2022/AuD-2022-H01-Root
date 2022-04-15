@@ -7,10 +7,6 @@ public class ListTest {
 
     private ListTest() {}
 
-    public static <T> void assertListOfListsEquals(ListItem<ListItem<T>> expected, ListItem<ListItem<T>> actual) {
-        assertListOfListsEquals0(expected,  actual, 0);
-    }
-
     /**
      * Checks deep equality for expected and actual list.
      * @param expected the expected list
