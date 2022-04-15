@@ -13,7 +13,7 @@ public class ListItem<T> {
     /**
      * The value stored in this member of a list.
      */
-    public @Nullable T key;
+    public T key;
 
     /**
      * A reference to the next member in this list (or {@code null} if this member is the last element in this list).
