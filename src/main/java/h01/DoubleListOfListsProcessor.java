@@ -210,10 +210,15 @@ public class DoubleListOfListsProcessor {
     public static void write(Writer writer, @Nullable ListItem<@Nullable ListItem<Double>> listOfLists) {
         try {
             for (var currOuter = listOfLists; currOuter != null; currOuter = currOuter.next) {
+                if (currOuter.key == null) {
+                    writer.write("#");
+                }
                 for (var currInner = currOuter.key; currInner != null; currInner = currInner.next) {
                     writer.write(currInner.key + (currInner.next != null ? "#" : ""));
                 }
-                writer.write(currOuter.next != null ? "\n" : "#");
+                if (currOuter.next != null) {
+                    writer.write("\n");
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
