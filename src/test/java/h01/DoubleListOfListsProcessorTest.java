@@ -15,8 +15,16 @@ class DoubleListOfListsProcessorTest {
 
     private final double limit = 6.0;
     private final ListItem<ListItem<Double>> expectedRepartitionedList =
-        toList(toList(1.0, 3.0), toList(5.0), toList(1.0, 2.0, 3.0), toList(4.0), toList(5.0));
-    private final ListItem<ListItem<Double>> listForReadWrite = toList(toList(1.0, 2.0), toList(), toList(1.0, 2.0, 3.0));
+        toList(
+            toList(1.0, 3.0),
+            toList(5.0),
+            toList(1.0, 2.0, 3.0),
+            toList(4.0),
+            toList(5.0));
+    private final ListItem<ListItem<Double>> listForReadWrite = toList(
+        toList(1.0, 2.0),
+        toList(),
+        toList(1.0, 2.0, 3.0));
     private final String contentForReadWrite = "1.0#2.0\n#\n1.0#2.0#3.0";
     private ListItem<ListItem<Double>> listToPartition;
 
