@@ -12,6 +12,10 @@ public class ListItem<T> {
 
     /**
      * The value stored in this member of a list.
+     *
+     * <p>
+     * Normally has the same nullability as {@link T} unless uninitialized.
+     * </p>
      */
     public T key;
 
