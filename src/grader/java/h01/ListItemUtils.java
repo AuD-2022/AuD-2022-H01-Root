@@ -3,9 +3,9 @@ package h01;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Objects;
-import java.util.function.Function;
 
 public final class ListItemUtils {
 
@@ -115,6 +115,23 @@ public final class ListItemUtils {
             return deepEquals(listItem1.next, listItem2.next);
         } else {
             return keysEqual;
+        }
+    }
+
+    public static boolean isCyclic(@Nullable ListItem<?> listItem) {
+        return isCyclic(listItem, new HashSet<>());
+    }
+
+    private static boolean isCyclic(@Nullable ListItem<?> listItem, HashSet<ListItem<?>> references) {
+        if (listItem == null) {
+            return false;
+        }
+
+        if (references.contains(listItem)) {
+            return true;
+        } else {
+            references.add(listItem);
+            return (listItem.key instanceof ListItem<?> key && isCyclic(key, references)) || isCyclic(listItem.next, references);
         }
     }
 }
