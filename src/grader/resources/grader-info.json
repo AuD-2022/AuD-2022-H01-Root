@@ -7,13 +7,24 @@
     {
       "name": "grader",
       "files": [
-        "h01/H01_RubricProvider.java"
+        "h01/utils/BytecodeTransformations.java",
+        "h01/utils/BytecodeUtils.java",
+        "h01/utils/MethodInterceptor.java",
+        "h01/H01_RubricProvider.java",
+        "h01/ListProviders.java",
+        "h01/ListItemUtils.java",
+        "h01/Tutor_DoubleListOfListsProcessor.java"
       ]
     },
     {
       "name": "solution",
       "files": [
-        "h01/Main.java"
+        "h01/Main.java",
+        "h01/DoubleListOfListsProcessor.java",
+        "h01/ListItem.java",
+        "h01/ListOfListsOfDoubleException.java",
+        "h01/ExampleJUnitTest.java",
+        "h01/PublicTests.java"
       ]
     }
   ]
