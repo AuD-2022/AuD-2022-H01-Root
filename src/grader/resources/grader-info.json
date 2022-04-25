@@ -11,6 +11,7 @@
         "h01/h2_2/PartitionListsAsCopyRecursivelyTests.java",
         "h01/h2_3/PartitionListsInPlaceIterativelyTests.java",
         "h01/h2_4/PartitionListsInPlaceRecursivelyTests.java",
+        "h01/h3_1/WriterTests.java",
         "h01/utils/BytecodeTransformations.java",
         "h01/utils/BytecodeUtils.java",
         "h01/utils/MethodInterceptor.java",
