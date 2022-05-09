@@ -17,9 +17,11 @@
         "h01/utils/BytecodeUtils.java",
         "h01/utils/MethodInterceptor.java",
         "h01/H01_RubricProvider.java",
+        "h01/H2_Test.java",
         "h01/ListProviders.java",
         "h01/ListItemUtils.java",
-        "h01/Tutor_DoubleListOfListsProcessor.java"
+        "h01/Tutor_DoubleListOfListsProcessor.java",
+        "h01/Tutor_Processor.java"
       ]
     },
     {

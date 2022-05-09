@@ -3,9 +3,7 @@ package h01;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.Objects;
+import java.util.*;
 
 public final class ListItemUtils {
 
@@ -47,11 +45,11 @@ public final class ListItemUtils {
         return listItem.next == null ? listItem : getTail(listItem.next);
     }
 
-    public static <T> @NotNull String toString(@NotNull ListItem<T> listItem) {
-        return "HEAD\n" + toStringHelper(listItem, new LinkedList<>());
+    public static String toString(@Nullable ListItem<?> listItem) {
+        return listItem == null ? "null" : "HEAD\n" + toStringHelper(listItem, new LinkedList<>());
     }
 
-    private static <T> @NotNull String toStringHelper(@NotNull ListItem<T> listItem, @NotNull LinkedList<Boolean> linkedList) {
+    private static String toStringHelper(ListItem<?> listItem, LinkedList<Boolean> linkedList) {
         StringBuilder stringBuilder = new StringBuilder();
         boolean lastElement = listItem.next == null;
 
@@ -59,7 +57,7 @@ public final class ListItemUtils {
         stringBuilder.append(!lastElement ? '\u251C' : '\u2514')
             .append("\u2500 ")
             .append(listItem.key instanceof ListItem<?>
-                ? "%s@%s".formatted(ListItem.class.getName(), Integer.toString(listItem.key.hashCode(), 16))
+                ? "%s".formatted(ListItem.class.getName())
                 : listItem.key)
             .append('\n');
 
@@ -70,6 +68,28 @@ public final class ListItemUtils {
         }
 
         return stringBuilder.append(lastElement ? "" : toStringHelper(listItem.next, linkedList)).toString();
+    }
+
+    public static String toSimpleString(@Nullable ListItem<?> listItem) {
+        StringBuilder builder = new StringBuilder();
+        toSimpleStringHelper(listItem, builder);
+        String result = builder.toString();
+        return result.isBlank() ? "null" : "(" + result + ")";
+    }
+
+    private static void toSimpleStringHelper(@Nullable ListItem<?> listItem, StringBuilder builder) {
+        for (ListItem<?> p = listItem; p != null; p = p.next) {
+            if (p.key == null) {
+                builder.append("()");
+            } else if (p.key instanceof ListItem key) {
+                builder.append('(');
+                toSimpleStringHelper(key, builder);
+                builder.append(')');
+            } else {
+                builder.append(p.key);
+            }
+            builder.append(p.next != null ? " " : "");
+        }
     }
 
     public static <T> @Nullable ListItem<T> copy(@Nullable ListItem<T> listItem) {
@@ -133,5 +153,9 @@ public final class ListItemUtils {
             references.add(listItem);
             return (listItem.key instanceof ListItem<?> key && isCyclic(key, references)) || isCyclic(listItem.next, references);
         }
+    }
+
+    public static <T> @Nullable ListItem<T> fromList(List<T> list) {
+        return (ListItem<T>) of(list.toArray(Object[]::new));
     }
 }

@@ -44,16 +44,15 @@ public class BytecodeTransformations implements ClassTransformer {
                     super.visitVarInsn(opcode, var);
                 }
 
-
                 @Override
                 public void visitMethodInsn(int opcode, String owner, String name, String descriptor, boolean isInterface) {
                     String signature = "%s %s%s".formatted(owner, name, descriptor);
                     if (opcode == Opcodes.INVOKEVIRTUAL) {
-//                        BytecodeUtils.injectMethodInterceptorCall(this,
-//                            signature,
-//                            true,
-//                            maxVar + 1,
-//                            Type.getArgumentTypes(descriptor));
+                        BytecodeUtils.injectMethodInterceptorCall(this,
+                            signature,
+                            true,
+                            maxVar + 1,
+                            Type.getArgumentTypes(descriptor));
                     } else if (opcode == Opcodes.INVOKESTATIC && !signature.equals("h01/utils/MethodInterceptor "
                             + "addInvocation(Lh01/utils/MethodInterceptor$Invocation;)V")) {
                         BytecodeUtils.injectMethodInterceptorCall(this,

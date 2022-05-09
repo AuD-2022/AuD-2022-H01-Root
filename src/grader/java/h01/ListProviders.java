@@ -8,16 +8,14 @@ import java.util.Random;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
+import static h01.H2_Test.*;
+
 public final class ListProviders {
 
-    private static final long SEED = 0L;
-    private static final int MAX_MAIN_LIST_SIZE = 100;
-    private static final int MAX_SUBLIST_SIZE = 100;
-    private static final double DOUBLE_LIMIT = 100d;
-    private static final int METHOD_CALLS = 10;
     private static final Function<Random, ListItem<Double>> SUBLIST_GENERATOR = random -> ListItemUtils.of(
         random.doubles(MAX_SUBLIST_SIZE, 0d, DOUBLE_LIMIT)
             .boxed()
+            .map(d -> (double) d.intValue())
             .toArray(Double[]::new)
     );
 
@@ -49,7 +47,7 @@ public final class ListProviders {
     public static final class EmptyMultipleSubListProvider implements ArgumentsProvider {
         @Override
         public Stream<? extends Arguments> provideArguments(ExtensionContext context) {
-            return Stream.of(Arguments.of(ListItemUtils.of(ListItemUtils.of(null, null, null))));
+            return Stream.of(Arguments.of(ListItemUtils.of(null, null, null)));
         }
     }
 
@@ -74,7 +72,7 @@ public final class ListProviders {
         public Stream<? extends Arguments> provideArguments(ExtensionContext context) {
             Random random = new Random(SEED);
             return Stream.generate(() -> Stream.generate(() -> ListItemUtils.of(SUBLIST_GENERATOR.apply(random)))
-                    .limit(random.nextInt(MAX_MAIN_LIST_SIZE))
+                    .limit(random.nextInt(1, MAX_MAIN_LIST_SIZE))
                     .reduce(ListItemUtils::append)
                     .orElseThrow())
                 .map(Arguments::of)

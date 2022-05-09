@@ -18,24 +18,6 @@ public class WriterTests {
     }
 
     @ParameterizedTest
-    @ArgumentsSource(ListProviders.EmptyMainListProvider.class)
-    public void testWithEmptyMainList(ListItem<ListItem<Double>> listOfLists) {
-        testLists(listOfLists);
-    }
-
-    @ParameterizedTest
-    @ArgumentsSource(ListProviders.EmptySingleSubListProvider.class)
-    public void testWithEmptySingleSublist(ListItem<ListItem<Double>> listOfLists) {
-        testLists(listOfLists);
-    }
-
-    @ParameterizedTest
-    @ArgumentsSource(ListProviders.EmptyMultipleSubListProvider.class)
-    public void testWithEmptyMultipleSublist(ListItem<ListItem<Double>> listOfLists) {
-        testLists(listOfLists);
-    }
-
-    @ParameterizedTest
     @ArgumentsSource(ListProviders.SingleSubListProvider.class)
     public void testWithSingleSublist(ListItem<ListItem<Double>> listOfLists) {
         testLists(listOfLists);
