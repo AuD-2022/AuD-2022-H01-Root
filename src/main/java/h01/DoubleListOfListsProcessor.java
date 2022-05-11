@@ -64,7 +64,7 @@ public class DoubleListOfListsProcessor {
             }
             // traverse inner items
             while (currInner != null) {
-                sumOfList += currInner.key;
+                sumOfList += currInner.key != null ? currInner.key : 0;
                 if (newInnerTail == null) {
                     newOuterTail.key = newInnerTail = behaviour == AS_COPY ? new ListItem<>() : currInner;
                 } else {
@@ -73,9 +73,9 @@ public class DoubleListOfListsProcessor {
                 // set inner tail (no effect if in-place)
                 newInnerTail.key = currInner.key;
                 // check if next element exceeds limit
-                if (currInner.next != null && sumOfList + currInner.next.key > limit)  {
-                    if (currInner.next.key > limit) {
-                        var delta = currInner.next.key - limit;
+                if (currInner.next != null && sumOfList + (currInner.next.key != null ? currInner.next.key : 0) > limit)  {
+                    if ((currInner.next.key != null ? currInner.next.key : 0) > limit) {
+                        var delta = (currInner.next.key != null ? currInner.next.key : 0) - limit;
                         throw new RuntimeException(String.format("element at (%d, %d) exceeds limit by %f", i, j, delta));
                     }
                     newInnerTail = null;
@@ -162,7 +162,7 @@ public class DoubleListOfListsProcessor {
             newOuterTail = behaviour == AS_COPY ? new ListItem<>() : currOuter;
         }
         if (currInner != null) {
-            sumOfList += currInner.key;
+            sumOfList += currInner.key != null ? currInner.key : 0;
             if (newInnerTail == null) {
                 newOuterTail.key = newInnerTail = behaviour == AS_COPY ? new ListItem<>() : currInner;
             } else {
@@ -171,10 +171,10 @@ public class DoubleListOfListsProcessor {
             // set inner tail (no effect if in-place)
             newInnerTail.key = currInner.key;
             // check if next element exceeds limit
-            if (currInner.next != null && sumOfList + currInner.next.key > limit) {
+            if (currInner.next != null && sumOfList + (currInner.next.key != null ? currInner.next.key : 0) > limit) {
                 // next element exceeds limit
-                if (currInner.next.key > limit) {
-                    var delta = currInner.next.key - limit;
+                if ((currInner.next.key != null ? currInner.next.key : 0) > limit) {
+                    var delta = (currInner.next.key != null ? currInner.next.key : 0) - limit;
                     throw new RuntimeException(String.format("element at (%d, %d) exceeds limit by %f", i, j, delta));
                 }
                 newInnerTail = null;
