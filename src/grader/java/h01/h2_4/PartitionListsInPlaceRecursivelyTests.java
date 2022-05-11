@@ -44,4 +44,10 @@ public class PartitionListsInPlaceRecursivelyTests {
     public void testWithMultipleSubListProvider(ListItem<ListItem<Double>> listOfLists) {
         H2_Test.test(listOfLists, DoubleListOfListsProcessor::partitionListsInPlaceRecursively);
     }
+
+    @ParameterizedTest
+    @ArgumentsSource(ListProviders.InvalidListProvider.class)
+    public void testInvalidList(ListItem<ListItem<Double>> listOfLists) {
+        H2_Test.testException(listOfLists, DoubleListOfListsProcessor::partitionListsInPlaceRecursively);
+    }
 }

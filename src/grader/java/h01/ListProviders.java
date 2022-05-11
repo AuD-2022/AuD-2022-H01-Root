@@ -79,4 +79,11 @@ public final class ListProviders {
                 .limit(METHOD_CALLS);
         }
     }
+
+    public static final class InvalidListProvider implements ArgumentsProvider {
+        @Override
+        public Stream<? extends Arguments> provideArguments(ExtensionContext context) {
+            return Stream.of(Arguments.of(ListItemUtils.of(ListItemUtils.of(PARTITION_LIMIT + 1))));
+        }
+    }
 }

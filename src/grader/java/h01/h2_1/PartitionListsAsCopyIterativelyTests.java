@@ -8,6 +8,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ArgumentsSource;
 import org.sourcegrade.jagr.api.rubric.TestForSubmission;
 
+import static h01.H2_Test.PARTITION_LIMIT;
 import static org.junit.jupiter.api.Assertions.*;
 
 @TestForSubmission("h01")
@@ -35,7 +36,8 @@ public class PartitionListsAsCopyIterativelyTests {
             .orElse(null);
 
         assertFalse(recursiveInvocationMatch, "Method called itself recursively");
-        assertNull(illegalMethod, "Method called an illegal method: " + illegalMethod);
+        assertTrue(illegalMethod == null || illegalMethod.equals("org/sourcegrade/jagr/core/executor/TimeoutHandler checkTimeout()V"),
+            "Method called an illegal method: " + illegalMethod);
     }
 
     @ParameterizedTest
@@ -66,5 +68,11 @@ public class PartitionListsAsCopyIterativelyTests {
     @ArgumentsSource(ListProviders.MultipleSubListProvider.class)
     public void testWithMultipleSubListProvider(ListItem<ListItem<Double>> listOfLists) {
         H2_Test.test(listOfLists, DoubleListOfListsProcessor::partitionListsAsCopyIteratively);
+    }
+
+    @ParameterizedTest
+    @ArgumentsSource(ListProviders.InvalidListProvider.class)
+    public void testInvalidList(ListItem<ListItem<Double>> listOfLists) {
+        H2_Test.testException(listOfLists, DoubleListOfListsProcessor::partitionListsAsCopyIteratively);
     }
 }

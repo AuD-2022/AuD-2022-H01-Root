@@ -49,4 +49,10 @@ public class PartitionListsInPlaceIterativelyTests {
     public void testWithMultipleSubListProvider(ListItem<ListItem<Double>> listOfLists) {
         H2_Test.test(listOfLists, DoubleListOfListsProcessor::partitionListsInPlaceIteratively);
     }
+
+    @ParameterizedTest
+    @ArgumentsSource(ListProviders.InvalidListProvider.class)
+    public void testInvalidList(ListItem<ListItem<Double>> listOfLists) {
+        H2_Test.testException(listOfLists, DoubleListOfListsProcessor::partitionListsInPlaceIteratively);
+    }
 }

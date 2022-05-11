@@ -44,4 +44,10 @@ public class PartitionListsAsCopyRecursivelyTests {
     public void testWithMultipleSubListProvider(ListItem<ListItem<Double>> listOfLists) {
         H2_Test.test(listOfLists, DoubleListOfListsProcessor::partitionListsAsCopyRecursively);
     }
+
+    @ParameterizedTest
+    @ArgumentsSource(ListProviders.InvalidListProvider.class)
+    public void testInvalidList(ListItem<ListItem<Double>> listOfLists) {
+        H2_Test.testException(listOfLists, DoubleListOfListsProcessor::partitionListsAsCopyRecursively);
+    }
 }

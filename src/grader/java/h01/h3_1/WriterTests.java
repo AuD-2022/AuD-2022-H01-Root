@@ -5,11 +5,13 @@ import h01.utils.MethodInterceptor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ArgumentsSource;
+import org.sourcegrade.jagr.api.rubric.TestForSubmission;
 
 import java.io.StringWriter;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@TestForSubmission("h01")
 public class WriterTests {
 
     @BeforeEach
