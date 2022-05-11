@@ -2,22 +2,23 @@ package h01.h2_3;
 
 import h01.*;
 import h01.utils.MethodInterceptor;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ArgumentsSource;
 import org.sourcegrade.jagr.api.rubric.TestForSubmission;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 @TestForSubmission("h01")
 public class PartitionListsInPlaceIterativelyTests {
-
-    private static final String FULLY_QUALIFIED_METHOD_NAME = "h01.DoubleListOfListsProcessor#"
-        + "partitionListsInPlaceIteratively(ListItem, double)";
 
     @BeforeEach
     public void resetInvocations() {
         MethodInterceptor.reset();
+    }
+
+    @AfterEach
+    public void checkIllegalCalls() {
+        H2_Test.checkIllegalCalls();
     }
 
     @ParameterizedTest

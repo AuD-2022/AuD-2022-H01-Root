@@ -2,6 +2,7 @@ package h01.h2_4;
 
 import h01.*;
 import h01.utils.MethodInterceptor;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ArgumentsSource;
@@ -13,6 +14,11 @@ public class PartitionListsInPlaceRecursivelyTests {
     @BeforeEach
     public void resetInvocations() {
         MethodInterceptor.reset();
+    }
+
+    @AfterEach
+    public void checkIllegalCalls() {
+        H2_Test.checkIllegalCalls();
     }
 
     @ParameterizedTest

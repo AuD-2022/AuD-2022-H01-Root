@@ -1,5 +1,6 @@
 package h01;
 
+import h01.utils.MethodInterceptor;
 import org.opentest4j.AssertionFailedError;
 
 import java.util.function.BiFunction;
@@ -55,5 +56,22 @@ public final class H2_Test {
                 e.getMessage(),
                 "Actual exception message did not match expected one");
         }
+    }
+
+    public static void checkIllegalCalls() {
+        boolean recursiveInvocationMatch = MethodInterceptor.getInvocations()
+            .stream()
+            .anyMatch(invocation -> invocation.signature()
+                .equals("h01/DoubleListOfListsProcessor partitionListsAsCopyIteratively(Lh01/ListItem;D)Lh01/ListItem;"));
+        String illegalMethod = MethodInterceptor.getInvocations()
+            .stream()
+            .map(MethodInterceptor.Invocation::signature)
+            .filter(signature -> !signature.matches("h01/.*"))
+            .findAny()
+            .orElse(null);
+
+        assertFalse(recursiveInvocationMatch, "Method called itself recursively");
+        assertTrue(illegalMethod == null || illegalMethod.equals("org/sourcegrade/jagr/core/executor/TimeoutHandler checkTimeout()V"),
+            "Method called an illegal method: " + illegalMethod);
     }
 }
