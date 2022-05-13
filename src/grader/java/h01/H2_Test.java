@@ -29,7 +29,16 @@ public final class H2_Test {
             PARTITION_LIMIT);
         ListItem<ListItem<Double>> expected_alt = Tutor_Processor.partitionLists_Alt(ListItemUtils.deepCopy(listOfLists),
             PARTITION_LIMIT);
-        ListItem<ListItem<Double>> actual = function.apply(ListItemUtils.deepCopy(listOfLists), PARTITION_LIMIT);
+        ListItem<ListItem<Double>> actual;
+        try {
+            actual = function.apply(ListItemUtils.deepCopy(listOfLists), PARTITION_LIMIT);
+        } catch (RuntimeException e) {
+            if (e.getMessage().matches("^H2\\.\\d - not implemented$")) {
+                throw new AssertionFailedError(e.getMessage().replace('-', '|'));
+            } else {
+                throw e;
+            }
+        }
 
         try {
             assertEquals(
@@ -53,7 +62,10 @@ public final class H2_Test {
         Exception e = assertThrows(RuntimeException.class,
             () -> function.apply(ListItemUtils.deepCopy(listOfLists), PARTITION_LIMIT));
         double delta = listOfLists.key.key - PARTITION_LIMIT;
-        if (!e.getMessage().matches("[\\w ]*\\(<? *0 *>?, ?<? *0 *>?\\)[\\w ]*\\d([.,]\\d+)?$")) {
+
+        if (e.getMessage().matches("^H2\\.\\d - not implemented$")) {
+            fail(e.getMessage().replace('-', '|'));
+        } else if (!e.getMessage().matches("[\\w ]*\\(<? *0 *>?, ?<? *0 *>?\\)[\\w ]*\\d([.,]\\d+)?$")) {
             assertEquals("element at (0, 0) exceeds limit by " + delta,
                 e.getMessage(),
                 "Actual exception message did not match expected one");

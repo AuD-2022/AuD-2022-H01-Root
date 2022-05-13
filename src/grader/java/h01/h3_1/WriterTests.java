@@ -5,6 +5,7 @@ import h01.utils.MethodInterceptor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ArgumentsSource;
+import org.opentest4j.AssertionFailedError;
 import org.sourcegrade.jagr.api.rubric.TestForSubmission;
 
 import java.io.IOException;
@@ -48,7 +49,15 @@ public class WriterTests {
         StringWriter stringWriterExpected = new StringWriter();
         StringWriter stringWriterActual = new StringWriter();
         Tutor_Processor.write(stringWriterExpected, ListItemUtils.deepCopy(listOfLists));
-        DoubleListOfListsProcessor.write(stringWriterActual, ListItemUtils.deepCopy(listOfLists));
+        try {
+            DoubleListOfListsProcessor.write(stringWriterActual, ListItemUtils.deepCopy(listOfLists));
+        } catch (RuntimeException e) {
+            if (e.getMessage().matches("^H3\\.\\d - not implemented$")) {
+                throw new AssertionFailedError(e.getMessage().replace('-', '|'));
+            } else {
+                throw e;
+            }
+        }
         String stringExcepted = stringWriterExpected.toString();
         String stringActual = stringWriterActual.toString();
         int expectedNumberOfLinebreaks = (int) stringExcepted.chars().filter(i -> i == '\n').count();

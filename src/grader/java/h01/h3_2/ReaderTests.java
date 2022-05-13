@@ -5,6 +5,7 @@ import h01.utils.MethodInterceptor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ArgumentsSource;
+import org.opentest4j.AssertionFailedError;
 import org.sourcegrade.jagr.api.rubric.TestForSubmission;
 
 import java.io.BufferedReader;
@@ -54,13 +55,21 @@ public class ReaderTests {
         String stringExcepted = stringWriterExpected.toString();
         Supplier<BufferedReader> readerSupplier = () -> new BufferedReader(new StringReader(stringExcepted));
 
-        assertEquals(
-            SIMPLE_STRING_FORMAT
-                ? ListItemUtils.toSimpleString(Tutor_Processor.read(readerSupplier.get()))
-                : ListItemUtils.toString(Tutor_Processor.read(readerSupplier.get())),
-            SIMPLE_STRING_FORMAT
-                ? ListItemUtils.toSimpleString(DoubleListOfListsProcessor.read(readerSupplier.get()))
-                : ListItemUtils.toString(DoubleListOfListsProcessor.read(readerSupplier.get()))
-        );
+        try {
+            assertEquals(
+                SIMPLE_STRING_FORMAT
+                    ? ListItemUtils.toSimpleString(Tutor_Processor.read(readerSupplier.get()))
+                    : ListItemUtils.toString(Tutor_Processor.read(readerSupplier.get())),
+                SIMPLE_STRING_FORMAT
+                    ? ListItemUtils.toSimpleString(DoubleListOfListsProcessor.read(readerSupplier.get()))
+                    : ListItemUtils.toString(DoubleListOfListsProcessor.read(readerSupplier.get()))
+            );
+        } catch (RuntimeException e) {
+            if (e.getMessage().matches("^H3\\.\\d - not implemented$")) {
+                throw new AssertionFailedError(e.getMessage().replace('-', '|'));
+            } else {
+                throw e;
+            }
+        }
     }
 }
