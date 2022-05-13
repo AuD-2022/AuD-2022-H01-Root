@@ -35,13 +35,15 @@ public final class H2_Test {
             assertEquals(
                 SIMPLE_STRING_FORMAT ? ListItemUtils.toSimpleString(expected_alt) : ListItemUtils.toString(expected_alt),
                 SIMPLE_STRING_FORMAT ? ListItemUtils.toSimpleString(actual) : ListItemUtils.toString(actual),
-                "Partitioned lists differ for input list " + ListItemUtils.toSimpleString(listOfLists)
+                "Partitioned lists differ for input list %s and limit %f".formatted(ListItemUtils.toSimpleString(listOfLists),
+                    PARTITION_LIMIT)
             );
         } catch (AssertionFailedError e) {
             assertEquals(
                 SIMPLE_STRING_FORMAT ? ListItemUtils.toSimpleString(expected) : ListItemUtils.toString(expected),
                 SIMPLE_STRING_FORMAT ? ListItemUtils.toSimpleString(actual) : ListItemUtils.toString(actual),
-                "Partitioned lists differ for input list " + ListItemUtils.toSimpleString(listOfLists)
+                "Partitioned lists differ for input list %s and limit %f".formatted(ListItemUtils.toSimpleString(listOfLists),
+                    PARTITION_LIMIT)
             );
         }
     }
@@ -51,7 +53,7 @@ public final class H2_Test {
         Exception e = assertThrows(RuntimeException.class,
             () -> function.apply(ListItemUtils.deepCopy(listOfLists), PARTITION_LIMIT));
         double delta = listOfLists.key.key - PARTITION_LIMIT;
-        if (!e.getMessage().matches("[Ee]lement at \\(0, ?0\\) exceeds limit by .+")) {
+        if (!e.getMessage().matches("[\\w ]*\\(0, ?0\\)[\\w ]*\\d([.,]0+)?$")) {
             assertEquals("element at (0, 0) exceeds limit by " + delta,
                 e.getMessage(),
                 "Actual exception message did not match expected one");
