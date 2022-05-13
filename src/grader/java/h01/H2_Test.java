@@ -53,18 +53,24 @@ public final class H2_Test {
         Exception e = assertThrows(RuntimeException.class,
             () -> function.apply(ListItemUtils.deepCopy(listOfLists), PARTITION_LIMIT));
         double delta = listOfLists.key.key - PARTITION_LIMIT;
-        if (!e.getMessage().matches("[\\w ]*\\(0, ?0\\)[\\w ]*\\d([.,]0+)?$")) {
+        if (!e.getMessage().matches("[\\w ]*\\(<? *0 *>?, ?<? *0 *>?\\)[\\w ]*\\d([.,]\\d+)?$")) {
             assertEquals("element at (0, 0) exceeds limit by " + delta,
                 e.getMessage(),
                 "Actual exception message did not match expected one");
         }
     }
 
-    public static void checkIllegalCalls() {
+    public static void checkIllegalCalls(String signature) {
         boolean recursiveInvocationMatch = MethodInterceptor.getInvocations()
             .stream()
             .anyMatch(invocation -> invocation.signature()
-                .equals("h01/DoubleListOfListsProcessor partitionListsAsCopyIteratively(Lh01/ListItem;D)Lh01/ListItem;"));
+                .equals(signature));
+
+        assertFalse(recursiveInvocationMatch, "Method called itself recursively");
+        checkIllegalCalls();
+    }
+
+    public static void checkIllegalCalls() {
         String illegalMethod = MethodInterceptor.getInvocations()
             .stream()
             .map(MethodInterceptor.Invocation::signature)
@@ -72,7 +78,6 @@ public final class H2_Test {
             .findAny()
             .orElse(null);
 
-        assertFalse(recursiveInvocationMatch, "Method called itself recursively");
         assertTrue(illegalMethod == null || illegalMethod.equals("org/sourcegrade/jagr/core/executor/TimeoutHandler checkTimeout()V"),
             "Method called an illegal method: " + illegalMethod);
     }

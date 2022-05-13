@@ -18,7 +18,7 @@ public class PartitionListsAsCopyIterativelyTests {
 
     @AfterEach
     public void checkIllegalCalls() {
-        H2_Test.checkIllegalCalls();
+        H2_Test.checkIllegalCalls("h01/DoubleListOfListsProcessor partitionListsAsCopyIteratively(Lh01/ListItem;D)Lh01/ListItem;");
     }
 
     @ParameterizedTest

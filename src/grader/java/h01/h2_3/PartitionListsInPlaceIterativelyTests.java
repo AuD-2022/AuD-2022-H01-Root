@@ -18,7 +18,7 @@ public class PartitionListsInPlaceIterativelyTests {
 
     @AfterEach
     public void checkIllegalCalls() {
-        H2_Test.checkIllegalCalls();
+        H2_Test.checkIllegalCalls("h01/DoubleListOfListsProcessor partitionListsInPlaceIteratively(Lh01/ListItem;D)Lh01/ListItem;");
     }
 
     @ParameterizedTest
