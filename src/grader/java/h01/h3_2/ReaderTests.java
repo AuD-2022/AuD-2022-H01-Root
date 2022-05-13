@@ -16,6 +16,7 @@ import java.util.function.Supplier;
 
 import static h01.H2_Test.SIMPLE_STRING_FORMAT;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 @TestForSubmission("h01")
 public class ReaderTests {
@@ -54,15 +55,18 @@ public class ReaderTests {
         Tutor_Processor.write(stringWriterExpected, ListItemUtils.deepCopy(listOfLists));
         String stringExcepted = stringWriterExpected.toString();
         Supplier<BufferedReader> readerSupplier = () -> new BufferedReader(new StringReader(stringExcepted));
+        ListItem<ListItem<Double>> expected = Tutor_Processor.read(readerSupplier.get());
+        ListItem<ListItem<Double>> actual = DoubleListOfListsProcessor.read(readerSupplier.get());
 
+        assertFalse(ListItemUtils.isCyclic(actual), "Returned list is cyclic but shouldn't be");
         try {
             assertEquals(
                 SIMPLE_STRING_FORMAT
-                    ? ListItemUtils.toSimpleString(Tutor_Processor.read(readerSupplier.get()))
-                    : ListItemUtils.toString(Tutor_Processor.read(readerSupplier.get())),
+                    ? ListItemUtils.toSimpleString(expected)
+                    : ListItemUtils.toString(expected),
                 SIMPLE_STRING_FORMAT
-                    ? ListItemUtils.toSimpleString(DoubleListOfListsProcessor.read(readerSupplier.get()))
-                    : ListItemUtils.toString(DoubleListOfListsProcessor.read(readerSupplier.get()))
+                    ? ListItemUtils.toSimpleString(actual)
+                    : ListItemUtils.toString(actual)
             );
         } catch (RuntimeException e) {
             if (e.getMessage().matches("^H3\\.\\d - not implemented$")) {

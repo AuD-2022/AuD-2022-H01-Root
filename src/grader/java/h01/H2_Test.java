@@ -40,6 +40,7 @@ public final class H2_Test {
             }
         }
 
+        assertFalse(ListItemUtils.isCyclic(actual), "Returned ListItem list is cyclic but shouldn't be");
         try {
             assertEquals(
                 SIMPLE_STRING_FORMAT ? ListItemUtils.toSimpleString(expected_alt) : ListItemUtils.toString(expected_alt),
