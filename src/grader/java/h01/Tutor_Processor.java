@@ -1,6 +1,9 @@
 package h01;
 
+import java.io.*;
+import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.StringJoiner;
 
 public class Tutor_Processor {
 
@@ -56,5 +59,40 @@ public class Tutor_Processor {
         }
 
         return ListItemUtils.fromList(partitionedList.stream().map(ListItemUtils::fromList).toList());
+    }
+
+    public static void write(Writer writer, ListItem<ListItem<Double>> listOfLists) throws IOException {
+        StringJoiner mainListJoiner = new StringJoiner("\n");
+
+        for (ListItem<ListItem<Double>> pOuter = listOfLists; pOuter != null; pOuter = pOuter.next) {
+            StringJoiner sublistJoiner = new StringJoiner("#");
+
+            if (pOuter.key == null) {
+                sublistJoiner.add("").add("");
+            } else {
+                for (ListItem<Double> pInner = pOuter.key; pInner != null; pInner = pInner.next) {
+                    sublistJoiner.add(pInner.key.toString());
+                }
+            }
+            mainListJoiner.add(sublistJoiner.toString());
+        }
+
+        writer.write(mainListJoiner.toString());
+    }
+
+    public static ListItem<ListItem<Double>> read(BufferedReader reader) {
+        LinkedList<LinkedList<Double>> result = new LinkedList<>();
+
+        reader.lines()
+            .forEach(line -> {
+                result.add(new LinkedList<>());
+                String[] digits = line.split("#");
+
+                if (digits.length != 0) {
+                    Arrays.stream(digits).map(Double::valueOf).forEach(result.getLast()::add);
+                }
+            });
+
+        return ListItemUtils.fromList(result.stream().map(ListItemUtils::fromList).toList());
     }
 }

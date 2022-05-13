@@ -7,6 +7,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ArgumentsSource;
 import org.sourcegrade.jagr.api.rubric.TestForSubmission;
 
+import java.io.IOException;
 import java.io.StringWriter;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -20,21 +21,33 @@ public class WriterTests {
     }
 
     @ParameterizedTest
+    @ArgumentsSource(ListProviders.EmptyMainListProvider.class)
+    public void testWithEmptyMainList(ListItem<ListItem<Double>> listOfLists) throws IOException {
+        testLists(listOfLists);
+    }
+
+    @ParameterizedTest
+    @ArgumentsSource(ListProviders.EmptyMultipleSubListProvider.class)
+    public void testWithMultipleEmptySublists(ListItem<ListItem<Double>> listOfLists) throws IOException {
+        testLists(listOfLists);
+    }
+
+    @ParameterizedTest
     @ArgumentsSource(ListProviders.SingleSubListProvider.class)
-    public void testWithSingleSublist(ListItem<ListItem<Double>> listOfLists) {
+    public void testWithSingleSublist(ListItem<ListItem<Double>> listOfLists) throws IOException {
         testLists(listOfLists);
     }
 
     @ParameterizedTest
     @ArgumentsSource(ListProviders.MultipleSubListProvider.class)
-    public void testWithMultipleSublist(ListItem<ListItem<Double>> listOfLists) {
+    public void testWithMultipleSublist(ListItem<ListItem<Double>> listOfLists) throws IOException {
         testLists(listOfLists);
     }
 
-    private static void testLists(ListItem<ListItem<Double>> listOfLists) {
+    private static void testLists(ListItem<ListItem<Double>> listOfLists) throws IOException {
         StringWriter stringWriterExpected = new StringWriter();
         StringWriter stringWriterActual = new StringWriter();
-        Tutor_DoubleListOfListsProcessor.write(stringWriterExpected, ListItemUtils.deepCopy(listOfLists));
+        Tutor_Processor.write(stringWriterExpected, ListItemUtils.deepCopy(listOfLists));
         DoubleListOfListsProcessor.write(stringWriterActual, ListItemUtils.deepCopy(listOfLists));
         String stringExcepted = stringWriterExpected.toString();
         String stringActual = stringWriterActual.toString();
