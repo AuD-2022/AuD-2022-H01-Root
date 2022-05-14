@@ -28,7 +28,7 @@ public class H01_RubricProvider implements RubricProvider {
             .build();
 
     private static final Criterion CRITERION_H2_1 = Criterion.builder()
-        .shortDescription("H2.1 - Einzellisten as-copy iterativ zerlegen")
+        .shortDescription("H2.1 | Einzellisten as-copy iterativ zerlegen")
         .addChildCriteria(
             DEFAULT_CRITERION.apply("Methode funktioniert korrekt mit leerer Hauptliste.",
                 () -> PartitionListsAsCopyIterativelyTests.class.getDeclaredMethod("testWithEmptyMainList",
@@ -49,7 +49,7 @@ public class H01_RubricProvider implements RubricProvider {
                 () -> PartitionListsAsCopyIterativelyTests.class.getDeclaredMethod("testInvalidList", ListItem.class))
         ).build();
     private static final Criterion CRITERION_H2_2 = Criterion.builder()
-        .shortDescription("H2.2 - Einzellisten as-copy rekursiv zerlegen")
+        .shortDescription("H2.2 | Einzellisten as-copy rekursiv zerlegen")
         .addChildCriteria(
             DEFAULT_CRITERION.apply("Methode funktioniert korrekt mit leerer Hauptliste.",
                 () -> PartitionListsAsCopyRecursivelyTests.class.getDeclaredMethod("testWithEmptyMainList",
@@ -70,7 +70,7 @@ public class H01_RubricProvider implements RubricProvider {
                 () -> PartitionListsAsCopyRecursivelyTests.class.getDeclaredMethod("testInvalidList", ListItem.class))
         ).build();
     private static final Criterion CRITERION_H2_3 = Criterion.builder()
-        .shortDescription("H2.3 - Einzellisten in-place iterativ zerlegen")
+        .shortDescription("H2.3 | Einzellisten in-place iterativ zerlegen")
         .addChildCriteria(
             DEFAULT_CRITERION.apply("Methode funktioniert korrekt mit leerer Hauptliste.",
                 () -> PartitionListsInPlaceIterativelyTests.class.getDeclaredMethod("testWithEmptyMainList",
@@ -91,7 +91,7 @@ public class H01_RubricProvider implements RubricProvider {
                 () -> PartitionListsInPlaceIterativelyTests.class.getDeclaredMethod("testInvalidList", ListItem.class))
         ).build();
     private static final Criterion CRITERION_H2_4 = Criterion.builder()
-        .shortDescription("H2.4 - Einzellisten in-place rekursiv zerlegen")
+        .shortDescription("H2.4 | Einzellisten in-place rekursiv zerlegen")
         .addChildCriteria(
             DEFAULT_CRITERION.apply("Methode funktioniert korrekt mit leerer Hauptliste.",
                 () -> PartitionListsInPlaceRecursivelyTests.class.getDeclaredMethod("testWithEmptyMainList",
@@ -113,7 +113,7 @@ public class H01_RubricProvider implements RubricProvider {
         ).build();
 
     private static final Criterion CRITERION_H3_1 = Criterion.builder()
-        .shortDescription("H3.1 - Liste von Listen auf Textdatensenke hinausschreiben")
+        .shortDescription("H3.1 | Liste von Listen auf Textdatensenke hinausschreiben")
         .addChildCriteria(
             DEFAULT_CRITERION.apply("Methode funktioniert korrekt mit leerer Hauptliste.",
                 () -> WriterTests.class.getDeclaredMethod("testWithEmptyMainList", ListItem.class)),
@@ -127,7 +127,7 @@ public class H01_RubricProvider implements RubricProvider {
         .build();
 
     private static final Criterion CRITERION_H3_2 = Criterion.builder()
-        .shortDescription("H3.2 - Liste von Listen aus Datei einlesen")
+        .shortDescription("H3.2 | Liste von Listen aus Datei einlesen")
         .addChildCriteria(
             DEFAULT_CRITERION.apply("Methode funktioniert korrekt mit leerer Hauptliste.",
                 () -> ReaderTests.class.getDeclaredMethod("testWithEmptyMainList", ListItem.class)),
@@ -141,17 +141,17 @@ public class H01_RubricProvider implements RubricProvider {
         .build();
 
     private static final Criterion CRITERION_H2 = Criterion.builder()
-        .shortDescription("H2 - Zerlegen von Einzellisten")
+        .shortDescription("H2 | Zerlegen von Einzellisten")
         .addChildCriteria(CRITERION_H2_1, CRITERION_H2_2, CRITERION_H2_3, CRITERION_H2_4)
         .build();
 
     private static final Criterion CRITERION_H3 = Criterion.builder()
-        .shortDescription("H3 - IO-Operationen")
+        .shortDescription("H3 | IO-Operationen")
         .addChildCriteria(CRITERION_H3_1, CRITERION_H3_2)
         .build();
 
     public static final Rubric RUBRIC = Rubric.builder()
-        .title("H01 - Verzeigerte Strukturen")
+        .title("H01 | Verzeigerte Strukturen")
         .addChildCriteria(CRITERION_H2, CRITERION_H3)
         .build();
 
