@@ -66,7 +66,7 @@ public final class H2_Test {
 
         if (e.getMessage().matches("^H2\\.\\d - not implemented$")) {
             fail(e.getMessage().replace('-', '|'));
-        } else if (!e.getMessage().matches("[\\w ]*\\(<? *0 *>?, ?<? *0 *>?\\)[\\w ]*\\d([.,]\\d+)?$")) {
+        } else if (!e.getMessage().matches("[\\w\\s]*\\(<?\\s*0\\s*>?,\\s?<?\\s*0\\s*>?\\)[\\w\\s]*\\d([.,]\\d+)?$")) {
             assertEquals("element at (0, 0) exceeds limit by " + delta,
                 e.getMessage(),
                 "Actual exception message did not match expected one");
