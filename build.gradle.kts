@@ -32,6 +32,7 @@ dependencies {
     "graderCompileOnly"("org.sourcegrade:jagr-launcher:0.4.0") {
         exclude("org.jetbrains", "annotations")
     }
+    "graderImplementation"("org.ow2.asm:asm:9.2")
     testImplementation("org.junit.jupiter:junit-jupiter:5.8.2")
 }
 

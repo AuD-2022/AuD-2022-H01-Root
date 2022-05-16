@@ -7,13 +7,31 @@
     {
       "name": "grader",
       "files": [
-        "h01/H01_RubricProvider.java"
+        "h01/h2_1/PartitionListsAsCopyIterativelyTests.java",
+        "h01/h2_2/PartitionListsAsCopyRecursivelyTests.java",
+        "h01/h2_3/PartitionListsInPlaceIterativelyTests.java",
+        "h01/h2_4/PartitionListsInPlaceRecursivelyTests.java",
+        "h01/h3_1/WriterTests.java",
+        "h01/h3_2/ReaderTests.java",
+        "h01/utils/BytecodeTransformations.java",
+        "h01/utils/BytecodeUtils.java",
+        "h01/utils/MethodInterceptor.java",
+        "h01/H01_RubricProvider.java",
+        "h01/H2_Test.java",
+        "h01/ListProviders.java",
+        "h01/ListItemUtils.java",
+        "h01/Tutor_Processor.java"
       ]
     },
     {
       "name": "solution",
       "files": [
-        "h01/Main.java"
+        "h01/Main.java",
+        "h01/DoubleListOfListsProcessor.java",
+        "h01/ListItem.java",
+        "h01/ListOfListsOfDoubleException.java",
+        "h01/ExampleJUnitTest.java",
+        "h01/PublicTests.java"
       ]
     }
   ]
